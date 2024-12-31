@@ -1,9 +1,13 @@
 import { Table } from "antd";
 import { fetchAllUserAPI } from "../../services/api.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UserTable = () => {
     const [dataUsers, setDataUsers] = useState([]);
+
+    useEffect(() => {
+        loadUser();
+    }, []);
 
     const columns = [
         {
@@ -33,7 +37,7 @@ const UserTable = () => {
 
 
     return (
-        <Table dataSource={dataUsers} columns={columns} />
+        <Table dataSource={dataUsers} columns={columns} rowKey={"id"} />
     )
 }
 

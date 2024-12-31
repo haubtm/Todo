@@ -1,22 +1,26 @@
-import { Button, Input } from "antd";
-import axios from "axios";
+import { Button, Input, notification } from "antd";
 import { useState } from "react";
+import { createUserAPI } from "../../services/api.service";
 
 const UserForm = () => {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phone, setPhone] = useState("");
 
-    const handleClickBtn = () => {
-        const Url = "http://localhost:8080/api/v1/user";
-        const data = {
-            fullName: fullName,
-            email: email,
-            password: password,
-            phone: phoneNumber
+    const handleClickBtn = async () => {
+        const res = await createUserAPI(fullName, email, password, phone);
+        if (res.data) {
+            notification.success({
+                message: "Create user successfully",
+                description: "Create user successfully"
+            })
+        } else {
+            notification.error({
+                message: "Create user failed",
+                description: JSON.stringify(res.error)
+            })
         }
-        axios.post(Url, data)
     }
 
     return (
@@ -36,7 +40,7 @@ const UserForm = () => {
                 </div>
                 <div>
                     <span>Phone number</span>
-                    <Input value={phoneNumber} onChange={(event) => { setPhoneNumber(event.target.value) }} />
+                    <Input value={phone} onChange={(event) => { setPhone(event.target.value) }} />
                 </div>
                 <div>
                     <Button onClick={handleClickBtn} type="primary">Create User</Button>

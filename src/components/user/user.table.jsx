@@ -1,42 +1,39 @@
 import { Table } from "antd";
+import { fetchAllUserAPI } from "../../services/api.service";
+import { useState } from "react";
 
 const UserTable = () => {
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Mike',
-            age: 32,
-            address: '10 Downing Street',
-        },
-        {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street',
-        },
-    ];
+    const [dataUsers, setDataUsers] = useState([]);
 
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Id',
+            dataIndex: 'id',
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Full Name',
+            dataIndex: 'fullName',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Email',
+            dataIndex: 'email',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
         },
     ];
 
+    const loadUser = async () => {
+        const res = await fetchAllUserAPI()
+        if (res.data) {
+            setDataUsers(res.data)
+        }
+    }
+
 
     return (
-        <Table dataSource={dataSource} columns={columns} />
+        <Table dataSource={dataUsers} columns={columns} />
     )
 }
 

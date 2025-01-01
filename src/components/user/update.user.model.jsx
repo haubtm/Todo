@@ -30,8 +30,9 @@ const UpdateUserModal = (props) => {
         } else {
             notification.error({
                 message: "Update user failed",
-                description: JSON.stringify(res.error)
+                description: JSON.stringify(res.message)
             })
+
         }
     }
 
